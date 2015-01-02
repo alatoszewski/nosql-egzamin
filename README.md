@@ -7,3 +7,46 @@ W części query wyszukuje tylko te filmy które zaczynają sie od słów Harry 
 Użyłem do tego następującego wyrażenia regularnego: /^Harry Potter/.
 Map grupuje filmy wg nazwy i dodaje pole action do kolekcji pomocniczej.
 Reduce zlicza ilość wystąpień słowa "Liked" w tablicy values.
+
+Piersze map reduce:
+```sh
+db.movies.mapReduce(
+  function(){emit(this.title, this.action);},
+  function(key, values)
+  {
+    var count = 0;
+    for(var i = 0; i < values.length; ++i){
+      if(values[i] == "Liked")
+	count++;
+    }
+    return count
+  },
+  {
+    query: {title: /^Harry Potter/},
+    out: "hplikes"
+  }
+)
+```
+
+
+Wynik w kolekcji hplikes:
+```sh
+{ "_id" : "Harry Potter", "value" : 14 }
+{ "_id" : "Harry Potter Podcast", "value" : 0 }
+{ "_id" : "Harry Potter and the Chamber of Secrets", "value" : 4 }
+{ "_id" : "Harry Potter and the Deathly Hallows", "value" : 3 }
+{ "_id" : "Harry Potter and the Deathly Hallows, Part 1", "value" : 10 }
+{ "_id" : "Harry Potter and the Deathly Hallows, Part 2", "value" : 28 }
+{ "_id" : "Harry Potter and the Deathly Hallows: Part I", "value" : 3 }
+{ "_id" : "Harry Potter and the Deathly Hallows: Part II", "value" : 0 }
+{ "_id" : "Harry Potter and the Forbidden Journey", "value" : 1 }
+{ "_id" : "Harry Potter and the Goblet of Fire", "value" : 4 }
+{ "_id" : "Harry Potter and the Half", "value" : 26 }
+{ "_id" : "Harry Potter and the Half-Blood Prince", "value" : 2 }
+{ "_id" : "Harry Potter and the Order of the Phoenix", "value" : 2 }
+{ "_id" : "Harry Potter and the Prisoner of Azkaban", "value" : 8 }
+{ "_id" : "Harry Potter and the Sorcerer&apos;s Stone", "value" : 1 }
+{ "_id" : "Harry Potter and the Sorcerer's Stone", "value" : 3 }
+{ "_id" : "Harry Potter: A Decade of Magic", "value" : 31 }
+{ "_id" : "Harry Potter: The Final Chapter", "value" : 25 }
+```
