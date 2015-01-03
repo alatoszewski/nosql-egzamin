@@ -54,10 +54,25 @@ Wynik w kolekcji hplikes:
 ## Drugie map reduce
 Drugie zapytanie oblicza ilość komentarzy dla każdej z kategorii filmów.
 ```sh
+db.movies.mapReduce(
+  function(){emit(this.modelName, 1);},//Musi być jeden bo funkcja reduce nie działa na jednym elemencie i zamiast liczby było by ""
+  function(key, values)
+  {
+    return Array.sum(values)
+  },
+  {
+    query: {comment: {$ne : ""}, modelName: {$ne : null}},//Pozbywam sie pustych komentarzy i dokumentow bez rezysera.
+    out: "commod"
+  }
+)
 ```
 
 
 ```sh
+{ "_id" : "movies", "value" : 729852 }
+{ "_id" : "recording_artists", "value" : 3 }
+{ "_id" : "topics", "value" : 13 }
+{ "_id" : "tv_shows", "value" : 1959906 }
 ```
 
 
