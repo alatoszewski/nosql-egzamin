@@ -50,3 +50,15 @@ Wynik w kolekcji hplikes:
 { "_id" : "Harry Potter: A Decade of Magic", "value" : 31 }
 { "_id" : "Harry Potter: The Final Chapter", "value" : 25 }
 ```
+
+## Drugie map reduce
+Drugie zapytanie oblicza ilość komentarzy dla każdej z kategorii filmów.
+```sh
+```
+
+
+```sh
+```
+
+
+
