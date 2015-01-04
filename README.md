@@ -75,5 +75,6 @@ db.movies.mapReduce(
 { "_id" : "tv_shows", "value" : 1959906 }
 ```
 
-
+## Trzecie map reduce
+Ostatnie zapytanie oblicza Top10 reżyserów wg lajków i dislajków.
 
