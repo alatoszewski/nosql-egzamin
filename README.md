@@ -77,4 +77,37 @@ db.movies.mapReduce(
 
 ## Trzecie map reduce
 Ostatnie zapytanie oblicza Top10 reżyserów wg lajków i dislajków.
+```sh
+db.movies.mapReduce(
+  function(){emit(this.director, this.action);},
+  function(key, values)
+  {
+    var rank = 0;
+    for(var i = 0; i < values.length; ++i){
+      if(values[i] == "Liked")
+	rank++;
+      else //if(values[i] == "Disliked")
+	rank--;
+    }
+    return rank
+  },
+  {
+    query: { $and: [{director: {$ne : null}} , { $or: [ { action: "Liked" }, { action: "Disliked" } ]}]},
+    out: "dirrank"
+  }
+)
+```
 
+```sh
+db.dirrank.find( { value: { $not: { $type : 2 } } } ).sort({value:-1}).limit(10)//dokumenty z value nie bedacym stringiem
+{ "_id" : "tony randel", "value" : 119 }
+{ "_id" : "emilio estevez", "value" : 113 }
+{ "_id" : "andrew currie", "value" : 110 }
+{ "_id" : "billy ray", "value" : 105 }
+{ "_id" : "laurence dunmore", "value" : 105 }
+{ "_id" : "paul brickman", "value" : 104 }
+{ "_id" : "john mcnaughton", "value" : 103 }
+{ "_id" : "jeffrey nachmanoff", "value" : 99 }
+{ "_id" : "olivier dahan", "value" : 98 }
+{ "_id" : "peter mcdonald", "value" : 96 }
+```
