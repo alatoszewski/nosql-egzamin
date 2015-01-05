@@ -98,6 +98,7 @@ db.movies.mapReduce(
 )
 ```
 
+Wynik:
 ```sh
 db.dirrank.find( { value: { $not: { $type : 2 } } } ).sort({value:-1}).limit(10)//dokumenty z value nie bedacym stringiem
 { "_id" : "tony randel", "value" : 119 }
