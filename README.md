@@ -67,7 +67,7 @@ db.movies.mapReduce(
 )
 ```
 
-
+Wynik:
 ```sh
 { "_id" : "movies", "value" : 729852 }
 { "_id" : "recording_artists", "value" : 3 }
