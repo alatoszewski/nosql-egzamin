@@ -10,17 +10,20 @@ Reduce zlicza ilość wystąpień słowa "Liked" w tablicy values.
 
 Piersze map reduce:
 ```sh
+var map = function(){emit(this.title, this.action);}
+var reduce = function(key, values)
+{
+  var count = 0;
+  for(var i = 0; i < values.length; ++i){
+    if(values[i] == "Liked")
+      count++;
+  }
+  return count
+}
+
 db.movies.mapReduce(
-  function(){emit(this.title, this.action);},
-  function(key, values)
-  {
-    var count = 0;
-    for(var i = 0; i < values.length; ++i){
-      if(values[i] == "Liked")
-	count++;
-    }
-    return count
-  },
+  map,
+  reduce,
   {
     query: {title: /^Harry Potter/},
     out: "hplikes"
@@ -54,14 +57,17 @@ Wynik w kolekcji hplikes:
 ## Drugie map reduce
 Drugie zapytanie oblicza ilość komentarzy dla każdej z kategorii filmów.
 ```sh
+var map = function(){emit(this.modelName, 1);}
+var reduce = function(key, values)
+{
+  return Array.sum(values)
+}
+
 db.movies.mapReduce(
-  function(){emit(this.modelName, 1);},//Musi być jeden bo funkcja reduce nie działa na jednym elemencie i zamiast liczby było by ""
-  function(key, values)
+  map,
+  reduce,
   {
-    return Array.sum(values)
-  },
-  {
-    query: {comment: {$ne : ""}, modelName: {$ne : null}},//Pozbywam sie pustych komentarzy i dokumentow bez rezysera.
+    query: {comment: {$ne : ""}, modelName: {$ne : null}},
     out: "commod"
   }
 )
@@ -78,19 +84,22 @@ Wynik:
 ## Trzecie map reduce
 Ostatnie zapytanie oblicza Top10 reżyserów wg lajków i dislajków.
 ```sh
+var map = function(){emit(this.director, this.action);}
+var reduce = function(key, values)
+{
+  var rank = 0;
+  for(var i = 0; i < values.length; ++i){
+    if(values[i] == "Liked")
+      rank++;
+    else
+      rank--;
+  }
+  return rank
+}
+
 db.movies.mapReduce(
-  function(){emit(this.director, this.action);},
-  function(key, values)
-  {
-    var rank = 0;
-    for(var i = 0; i < values.length; ++i){
-      if(values[i] == "Liked")
-	rank++;
-      else //if(values[i] == "Disliked")
-	rank--;
-    }
-    return rank
-  },
+  map,
+  reduce,
   {
     query: { $and: [{director: {$ne : null}} , { $or: [ { action: "Liked" }, { action: "Disliked" } ]}]},
     out: "dirrank"
