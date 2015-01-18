@@ -53,6 +53,8 @@ Wynik w kolekcji hplikes:
 { "_id" : "Harry Potter: A Decade of Magic", "value" : 31 }
 { "_id" : "Harry Potter: The Final Chapter", "value" : 25 }
 ```
+![z1.png](https://raw.githubusercontent.com/alatoszewski/nosql-egzamin/master/z1.png)
+
 
 ## Drugie map reduce
 Drugie zapytanie oblicza ilość komentarzy dla każdej z kategorii filmów.
@@ -80,6 +82,8 @@ Wynik:
 { "_id" : "topics", "value" : 13 }
 { "_id" : "tv_shows", "value" : 1959906 }
 ```
+![z2.png](https://raw.githubusercontent.com/alatoszewski/nosql-egzamin/master/z2.png)
+
 
 ## Trzecie map reduce
 Ostatnie zapytanie oblicza Top10 reżyserów wg lajków i dislajków.
@@ -121,3 +125,5 @@ db.dirrank.find( { value: { $not: { $type : 2 } } } ).sort({value:-1}).limit(10)
 { "_id" : "olivier dahan", "value" : 98 }
 { "_id" : "peter mcdonald", "value" : 96 }
 ```
+![z3.png](https://raw.githubusercontent.com/alatoszewski/nosql-egzamin/master/z3.png)
+
