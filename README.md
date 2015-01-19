@@ -30,6 +30,8 @@ db.movies.mapReduce(
   }
 )
 ```
+Obciążenie komputera:
+![o1.png](https://raw.githubusercontent.com/alatoszewski/nosql-egzamin/master/o1.png)
 
 
 Wynik w kolekcji hplikes:
@@ -74,6 +76,9 @@ db.movies.mapReduce(
   }
 )
 ```
+Obciążenie komputera:
+![o2.png](https://raw.githubusercontent.com/alatoszewski/nosql-egzamin/master/o2.png)
+
 
 Wynik:
 ```sh
@@ -110,6 +115,9 @@ db.movies.mapReduce(
   }
 )
 ```
+Obciążenie komputera:
+![o3.png](https://raw.githubusercontent.com/alatoszewski/nosql-egzamin/master/o3.png)
+
 
 Wynik:
 ```sh
