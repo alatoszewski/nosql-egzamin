@@ -1,6 +1,16 @@
 # Egzamin
 W zadaniu użyłem bazy GetGlue.
 
+# Specyfikacja komputera:
+| Rodzaj komponentu     | Komponent                       |
+|-----------------------|---------------------------------|
+| OS                    | Kubuntu 64bit 14.04             |
+| CPU                   | Intel Core i5 4460              |
+| Ilość rdzeni          | 4                               |
+| RAM                   | 8 GB                            |
+| Dysku twardy          | HDD                             |
+
+
 ## Pierwsze map reduce
 Poniższe zapytanie liczy "lajki" dla poszczególnych filmów z serii Harry Potter.
 W części query wyszukuje tylko te filmy które zaczynają sie od słów Harry Potter.
